@@ -1,11 +1,15 @@
+import { QueryParams } from './types';
+import { Unit } from './Unit';
+
 class WeatherService {
   private baseUrl: string = 'https://api.openweathermap.org/data/2.5/weather';
   private apiKey: string = require('../config.json')['API_KEY'];
 
-  async getCurrentForecast(queryParams: any): Promise<any> {
-    if (!queryParams.q)
-      throw new Error('Location has not been defined in query parameters!');
+  private defaultParams: QueryParams = { q: 'London', units: Unit.Metric };
 
+  async getCurrentForecast(
+    queryParams: QueryParams = this.defaultParams
+  ): Promise<any> {
     const url: string = `${this.baseUrl}?apikey=${this.apiKey}`;
     const finalUrl: string = Object.entries(queryParams).reduce(
       (resultUrl, [key, value]): string => `${resultUrl}&${key}=${value}`,

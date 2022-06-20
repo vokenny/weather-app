@@ -4,10 +4,7 @@ import WeatherService from './WeatherService';
   const londonBtn = document.getElementById('londonBtn');
 
   londonBtn?.addEventListener('click', async () => {
-    const data = await WeatherService.getCurrentForecast({
-      q: 'london',
-    });
-
+    const data = await WeatherService.getCurrentForecast();
     console.log(data);
   });
 })();

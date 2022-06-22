@@ -1,5 +1,5 @@
 import { WeatherData } from '../../interfaces';
-import WeatherService from '../../WeatherService';
+import WeatherService from '../../services/WeatherService';
 import Card from '../card/card.component';
 
 const WEATHER_CONTENT_KEY = {

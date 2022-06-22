@@ -1,9 +1,9 @@
-import { QueryParams } from './types';
-import { Unit } from './Unit';
+import { QueryParams } from '../types';
+import { Unit } from '../constants/Unit';
 
 class WeatherService {
   private baseUrl: string = 'https://api.openweathermap.org/data/2.5/weather';
-  private apiKey: string = require('../config.json')['API_KEY'];
+  private apiKey: string = require('../../config.json')['API_KEY'];
   private defaultParams: QueryParams = { q: 'London', units: Unit.Metric };
 
   async getCurrentForecast(

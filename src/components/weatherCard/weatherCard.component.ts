@@ -10,9 +10,7 @@ const WEATHER_CONTENT_KEY = {
   temp_min: 'Min temp',
 };
 
-function buildWeatherDataContent(data: WeatherData): HTMLDivElement {
-  const $box: HTMLDivElement = document.createElement('div');
-
+function buildWeatherDataContent(data: WeatherData): HTMLParagraphElement[] {
   const $weatherInfo: HTMLParagraphElement[] = Object.entries(data).map(
     ([key, value]: [string, any]) => {
       const $p: HTMLParagraphElement = document.createElement('p');
@@ -28,9 +26,7 @@ function buildWeatherDataContent(data: WeatherData): HTMLDivElement {
     }
   );
 
-  $weatherInfo.forEach(($p) => $box.appendChild($p));
-
-  return $box;
+  return $weatherInfo;
 }
 
 export default async function WeatherCard(): Promise<HTMLDivElement> {
@@ -51,9 +47,7 @@ export default async function WeatherCard(): Promise<HTMLDivElement> {
     {}
   );
 
-  console.log(normalisedWeatherData);
-
-  const $weatherContent: HTMLDivElement = buildWeatherDataContent(
+  const $weatherContent: HTMLParagraphElement[] = buildWeatherDataContent(
     normalisedWeatherData
   );
   const $weatherCard: HTMLDivElement = Card(name, $weatherContent);

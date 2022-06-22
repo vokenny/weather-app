@@ -1,16 +1,12 @@
-import WeatherService from './WeatherService';
+import WeatherCard from './components/weatherCard/weatherCard.component';
 import './style.css';
-import Card from './components/card/card.component';
 
-(function Main() {
-  const main = document.getElementById('main-content') as HTMLElement;
-  const londonBtn = document.getElementById('londonBtn');
+(async function Main() {
+  const main: HTMLElement = document.getElementById(
+    'main-content'
+  ) as HTMLElement;
 
-  londonBtn?.addEventListener('click', async () => {
-    const data = await WeatherService.getCurrentForecast();
-    console.log(data);
-  });
+  const weatherCard: HTMLDivElement = await WeatherCard();
 
-  const weatherCard = Card();
   main.appendChild(weatherCard);
 })();

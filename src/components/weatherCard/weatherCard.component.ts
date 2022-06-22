@@ -1,15 +1,21 @@
+import { WeatherData } from '../../interfaces';
 import WeatherService from '../../WeatherService';
 import Card from '../card/card.component';
+
+function buildWeatherDataContent(data: WeatherData): HTMLDivElement {
+  const box = document.createElement('div');
+  return box;
+}
 
 export default async function WeatherCard() {
   const data = await WeatherService.getCurrentForecast();
   const { name, main } = data;
 
   const weatherData = Object.fromEntries(
-    Object.entries(main).filter(([key, _]) => key !== 'pressure')
+    Object.entries(main).filter(([key]) => key !== 'pressure')
   );
 
-  const normalisedWeatherData = Object.entries(weatherData).reduce(
+  const normalisedWeatherData: WeatherData = Object.entries(weatherData).reduce(
     (data: any, [key, value]: [string, any]) => {
       return {
         ...data,
@@ -21,7 +27,8 @@ export default async function WeatherCard() {
 
   console.log(normalisedWeatherData);
 
-  const weatherCard: HTMLDivElement = Card();
+  // TODO: Pass in title and weather content
+  const weatherCard: HTMLDivElement = Card('todo', 'todo');
 
   return weatherCard;
 }

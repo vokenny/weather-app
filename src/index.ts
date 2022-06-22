@@ -1,3 +1,4 @@
+import Search from './components/search/search.component';
 import WeatherCard from './components/weatherCard/weatherCard.component';
 import './style.css';
 
@@ -6,7 +7,8 @@ import './style.css';
     'main-content'
   ) as HTMLElement;
 
+  const $search: HTMLInputElement = Search();
   const $weatherCard: HTMLDivElement = await WeatherCard();
 
-  $main.appendChild($weatherCard);
+  $main.append($search, $weatherCard);
 })();

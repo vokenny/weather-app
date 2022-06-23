@@ -3,6 +3,7 @@ import './card.style.css';
 class Card {
   private $card: HTMLDivElement = document.createElement('div');
   private $heading: HTMLHeadingElement = document.createElement('h1');
+  private $rule: HTMLHRElement = document.createElement('hr');
   private $content: HTMLDivElement = document.createElement('div');
 
   constructor(type: string) {
@@ -14,7 +15,7 @@ class Card {
   update(title: string, content: HTMLElement[]): HTMLDivElement {
     this.$heading.textContent = title;
     this.$content.append(...content);
-    this.$card.replaceChildren(this.$heading, this.$content);
+    this.$card.replaceChildren(this.$heading, this.$rule, this.$content);
 
     return this.$card;
   }

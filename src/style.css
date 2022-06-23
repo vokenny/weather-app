@@ -1,11 +1,9 @@
-@font-face {
-  font-family: 'Do Hyeon';
-  src: url('./assets/fonts/DoHyeon-Regular.ttf') format('ttf');
-}
+@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
 
 * {
   box-sizing: border-box;
-  font-family: 'Do Hyeon', sans-serif;}
+  font-family: 'Do Hyeon', sans-serif;
+}
 
 html, body {
   margin: 0;

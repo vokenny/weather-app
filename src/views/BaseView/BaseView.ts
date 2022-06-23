@@ -1,3 +1,5 @@
+import './baseView.style.css';
+
 class BaseView {
   private $main: HTMLElement = document.createElement('main');
   $view: HTMLElement = document.createElement('div');

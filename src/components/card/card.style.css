@@ -1,5 +1,10 @@
 .card {
   padding: 30px;
+  min-width: 300px;
+}
+
+.card > .content {
+  font-size: large;
 }
 
 .glass {

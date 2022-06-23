@@ -1,16 +1,17 @@
-import Card from '../components/card/card.component';
-import Search from '../components/search/search.component';
-import { WeatherData } from '../interfaces';
-import { ObjFilter } from '../utils/ObjFilter';
-import BaseView from './BaseView';
+import Card from '../../components/card/card.component';
+import Search from '../../components/search/search.component';
+import { WeatherData } from '../../interfaces';
+import { ObjFilter } from '../../utils/ObjFilter';
+import BaseView from '../BaseView/BaseView';
+import './forecastView.style.css';
 
 class ForecastView extends BaseView {
   private WEATHER_CONTENT_KEY = {
     feels_like: 'Feels like',
     humidity: 'Humidity',
     temp: 'Temp',
-    temp_max: 'Max temp',
-    temp_min: 'Min temp',
+    temp_max: 'Max. temp',
+    temp_min: 'Min. temp',
   };
 
   $search: Search;

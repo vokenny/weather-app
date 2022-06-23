@@ -1,6 +1,6 @@
 import { WeatherData } from '../interfaces';
 import { ObjFilter } from '../utils/ObjFilter';
-import ForecastView from '../views/ForecastView';
+import ForecastView from '../views/ForecastView/ForecastView';
 
 class WeatherDataModel {
   private forecast: WeatherData = {

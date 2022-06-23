@@ -1,5 +1,6 @@
 import Card from '../../components/card/card.component';
 import Search from '../../components/search/search.component';
+import WeatherController from '../../controller/WeatherController';
 import { WeatherData } from '../../interfaces';
 import { ObjFilter } from '../../utils/ObjFilter';
 import BaseView from '../BaseView/BaseView';
@@ -14,21 +15,30 @@ class ForecastView extends BaseView {
     temp_min: 'Min. temp',
   };
 
-  $search: Search;
-  $forecastCard: Card;
-
+  private ctrl: WeatherController | null = null;
+  private $search: Search | null = null;
+  private $forecastCard: Card;
   private $weatherContent: HTMLParagraphElement[] = [];
 
   constructor() {
     super();
-    this.$search = new Search();
     this.$forecastCard = new Card('forecast');
     this.$view.className = 'forecast-view';
+  }
 
-    this.$view.replaceChildren(
-      this.$search.update(),
-      this.$forecastCard.update('Loading', [])
-    );
+  setCtrl(ctrl: WeatherController): void {
+    this.ctrl = ctrl;
+  }
+
+  build(): void {
+    if (this.ctrl) this.$search = new Search(this.ctrl);
+
+    const children = [
+      ...(this.$search ? [this.$search.update()] : []),
+      this.$forecastCard.update('Loading', []),
+    ];
+
+    this.$view.replaceChildren(...children);
 
     this.update();
   }
@@ -64,10 +74,12 @@ class ForecastView extends BaseView {
   updateForecast(forecast: WeatherData) {
     this.$weatherContent = this.buildWeatherDataContent(forecast);
 
-    this.$view.replaceChildren(
-      this.$search.update(),
-      this.$forecastCard.update(forecast.name, this.$weatherContent)
-    );
+    const children = [
+      ...(this.$search ? [this.$search.update()] : []),
+      this.$forecastCard.update(forecast.name, this.$weatherContent),
+    ];
+
+    this.$view.replaceChildren(...children);
 
     this.update();
   }

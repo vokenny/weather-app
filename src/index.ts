@@ -6,5 +6,8 @@ import './style.css';
 (async function Main() {
   const forecastView = await new ForecastView();
   const weatherDM = await new WeatherDataModel(forecastView);
-  const weatherCtrl = await new WeatherController(weatherDM);
+  const weatherCtrl = await new WeatherController(weatherDM, forecastView);
+
+  forecastView.setCtrl(weatherCtrl);
+  forecastView.build();
 })();

@@ -1,3 +1,17 @@
+@font-face {
+  font-family: 'Do Hyeon';
+  src: url('./assets/fonts/DoHyeon-Regular.ttf') format('ttf');
+}
+
+* {
+  box-sizing: border-box;
+  font-family: 'Do Hyeon', sans-serif;}
+
+html, body {
+  margin: 0;
+  padding: 1em;
+}
+
 body {
   background: url('https://images.unsplash.com/photo-1612863229236-60722f5ef8c9') no-repeat center fixed;     
   background-size: cover;

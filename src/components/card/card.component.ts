@@ -6,7 +6,7 @@ class Card {
   private $content: HTMLDivElement = document.createElement('div');
 
   constructor(type: string) {
-    this.$card.classList.add('card', `${type}-card`);
+    this.$card.classList.add('card', 'glass', `${type}-card`);
     this.$heading.classList.add('heading');
     this.$content.classList.add('content');
   }

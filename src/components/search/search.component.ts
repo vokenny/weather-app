@@ -1,8 +1,15 @@
 import './search.style.css';
 
-export default function Search(): HTMLInputElement {
-  const $search: HTMLInputElement = document.createElement('input');
-  $search.classList.add('search');
+class Search {
+  $search: HTMLInputElement = document.createElement('input');
 
-  return $search;
+  constructor() {
+    this.$search.id = 'search';
+  }
+
+  update(): HTMLInputElement {
+    return this.$search;
+  }
 }
+
+export default Search;

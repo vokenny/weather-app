@@ -1,20 +1,23 @@
 import './card.style.css';
 
-export default function Card(
-  title: string,
-  content: HTMLElement[]
-): HTMLDivElement {
-  const $card: HTMLDivElement = document.createElement('div');
-  $card.classList.add('card');
+class Card {
+  private $card: HTMLDivElement = document.createElement('div');
+  private $heading: HTMLHeadingElement = document.createElement('h1');
+  private $content: HTMLDivElement = document.createElement('div');
 
-  const $heading: HTMLHeadingElement = document.createElement('h1');
-  $heading.textContent = title;
+  constructor(type: string) {
+    this.$card.classList.add(`${type}-card`);
+    this.$heading.classList.add('heading');
+    this.$content.classList.add('content');
+  }
 
-  const $content: HTMLDivElement = document.createElement('div');
-  $content.classList.add('card-content');
-  $content.append(...content);
+  update(title: string, content: HTMLElement[]): HTMLDivElement {
+    this.$heading.textContent = title;
+    this.$content.append(...content);
+    this.$card.replaceChildren(this.$heading, this.$content);
 
-  $card.append($heading, $content);
-
-  return $card;
+    return this.$card;
+  }
 }
+
+export default Card;

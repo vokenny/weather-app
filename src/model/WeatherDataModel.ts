@@ -51,6 +51,11 @@ class WeatherDataModel {
 
     this.forecast = normalisedWeatherData;
     this.forecastView.updateForecast(this.forecast);
+
+    // TESTING:
+    // setTimeout(() => {
+    //   this.forecastView.updateForecast(this.forecast);
+    // }, 2000);
   }
 }
 

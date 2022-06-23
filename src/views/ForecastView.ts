@@ -23,6 +23,13 @@ class ForecastView extends BaseView {
     this.$search = new Search();
     this.$forecastCard = new Card('forecast');
     this.$view.className = 'forecast-view';
+
+    this.$view.replaceChildren(
+      this.$search.update(),
+      this.$forecastCard.update('Loading', [])
+    );
+
+    this.update();
   }
 
   private buildWeatherDataContent(

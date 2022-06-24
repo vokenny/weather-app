@@ -23,13 +23,26 @@ class Search {
     this.setEventListeners();
   }
 
+  private clearInput(): void {
+    this.$lookup.value = '';
+  }
+
+  private lookupHandler(evt: SubmitEvent): void {
+    evt.preventDefault();
+
+    const $lookup: HTMLInputElement = (evt.target as HTMLElement).querySelector(
+      `#${this.$lookup.id}`
+    ) as HTMLInputElement;
+    const value = $lookup.value;
+
+    const location: string = value.trim().toLowerCase();
+    if (location !== '') this.ctrl.updateForecast(location);
+
+    this.clearInput();
+  }
+
   private setEventListeners(): void {
-    this.$search.addEventListener('submit', (evt) => {
-      evt.preventDefault();
-      console.log(
-        (evt.target as HTMLElement).querySelector(`#${this.$lookup.id}`)
-      );
-    });
+    this.$search.addEventListener('submit', this.lookupHandler.bind(this));
   }
 
   update(): HTMLFormElement {

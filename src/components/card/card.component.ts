@@ -12,9 +12,17 @@ class Card {
     this.$content.classList.add('content');
   }
 
+  loading(): HTMLDivElement {
+    this.$heading.textContent = 'Loading';
+    this.$content.replaceChildren('');
+    this.$card.replaceChildren(this.$heading, this.$rule, this.$content);
+
+    return this.$card;
+  }
+
   update(title: string, content: HTMLElement[]): HTMLDivElement {
     this.$heading.textContent = title;
-    this.$content.append(...content);
+    this.$content.replaceChildren(...content);
     this.$card.replaceChildren(this.$heading, this.$rule, this.$content);
 
     return this.$card;

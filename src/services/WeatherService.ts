@@ -11,14 +11,6 @@ class WeatherService {
       url
     );
 
-    /**
-     * TODO: Handle *unexpected* failed network requests
-     * 1. Needs to gracefully fail by catching the error and printing out to console
-     * 2. Display a try again later message on the UI
-     *
-     * TODO: Handle expected fails like the location cannot be found, propagate it to show an
-     * 'Unknown location' message on the UI
-     */
     const response: Response = await fetch(finalUrl);
     const rawForecast: any = await response.json();
 

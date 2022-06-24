@@ -30,12 +30,16 @@ class ForecastView extends BaseView {
     this.ctrl = ctrl;
   }
 
+  loading(): HTMLDivElement {
+    return this.$forecastCard.loading();
+  }
+
   build(): void {
     if (this.ctrl) this.$search = new Search(this.ctrl);
 
     const children = [
       ...(this.$search ? [this.$search.update()] : []),
-      this.$forecastCard.update('Loading', []),
+      this.loading(),
     ];
 
     this.$view.replaceChildren(...children);

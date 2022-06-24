@@ -1,3 +1,4 @@
+import { UnitSystem, UNITS } from '../../constants/Unit';
 import Card from '../../components/card/card.component';
 import Search from '../../components/search/search.component';
 import WeatherController from '../../controller/WeatherController';
@@ -16,6 +17,7 @@ class ForecastView extends BaseView {
   };
 
   private ctrl: WeatherController | null = null;
+  private unitSystem: UnitSystem = UnitSystem.Metric;
   private $search: Search | null = null;
   private $forecastCard: Card;
   private $weatherContent: HTMLParagraphElement[] = [];
@@ -66,7 +68,10 @@ class ForecastView extends BaseView {
             key as keyof typeof this.WEATHER_CONTENT_KEY
           ];
 
-        $p.textContent = `${contentKey}: ${value}`;
+        const unit: string =
+          contentKey === 'humidity' ? '%' : UNITS[this.unitSystem];
+
+        $p.textContent = `${contentKey}: ${value} ${unit}`;
 
         return $p;
       }
@@ -75,7 +80,9 @@ class ForecastView extends BaseView {
     return $weatherInfo;
   }
 
-  updateForecast(forecast: WeatherData) {
+  updateForecast(forecast: WeatherData, unitSystem?: UnitSystem) {
+    if (unitSystem) this.unitSystem = unitSystem;
+
     this.$weatherContent = this.buildWeatherDataContent(forecast);
 
     const children = [

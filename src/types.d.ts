@@ -1,6 +1,6 @@
-import { Unit } from './constants/Unit';
+import { UnitSystem } from './constants/Unit';
 
 type QueryParams = {
   q: string;
-  units?: Unit;
+  units?: UnitSystem;
 };

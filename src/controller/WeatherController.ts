@@ -1,4 +1,4 @@
-import { Unit } from '../constants/Unit';
+import { UnitSystem } from '../constants/Unit';
 import WeatherDataModel from '../model/WeatherDataModel';
 import WeatherService from '../services/WeatherService';
 import { QueryParams } from '../types';
@@ -7,7 +7,7 @@ import ForecastView from '../views/ForecastView/ForecastView';
 class WeatherController {
   private weatherDataModel;
   private forecastView: ForecastView;
-  private defaultArgs: QueryParams = { q: 'London', units: Unit.Metric };
+  private defaultArgs: QueryParams = { q: 'London' };
 
   constructor(dataModel: WeatherDataModel, forecastView: ForecastView) {
     this.weatherDataModel = dataModel;
@@ -16,12 +16,7 @@ class WeatherController {
   }
 
   async updateForecast(location?: string): Promise<void> {
-    const args: QueryParams = !location
-      ? this.defaultArgs
-      : {
-          ...this.defaultArgs,
-          q: location,
-        };
+    const args: QueryParams = !location ? this.defaultArgs : { q: location };
 
     /**
      * TODO: Handle *unexpected* failed network requests

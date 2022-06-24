@@ -1,3 +1,4 @@
+import { UnitSystem } from '../constants/Unit';
 import { WeatherData } from '../interfaces';
 import { ObjFilter } from '../utils/ObjFilter';
 import ForecastView from '../views/ForecastView/ForecastView';
@@ -45,12 +46,15 @@ class WeatherDataModel {
     return this.forecast;
   }
 
-  setNewForecast(rawForecast: any): void {
+  setNewForecast(rawForecast: any, unitSystem?: UnitSystem): void {
     const normalisedWeatherData: WeatherData =
       this.normaliseWeatherData(rawForecast);
 
     this.forecast = normalisedWeatherData;
-    this.forecastView.updateForecast(this.forecast);
+
+    unitSystem
+      ? this.forecastView.updateForecast(this.forecast, unitSystem)
+      : this.forecastView.updateForecast(this.forecast);
 
     // TESTING:
     // setTimeout(() => {

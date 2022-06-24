@@ -31,9 +31,11 @@ class WeatherController {
      * TODO: Handle *expected* fails like the location cannot be found, propagate it to show an
      * 'Unknown location' message on the UI
      */
-    const newForecastData: any = await WeatherService.getNewForecast(args);
+    const response: Response = await WeatherService.getNewForecast(args);
+    const rawForecast: any = await response.json();
+
     this.forecastView.loading();
-    this.weatherDataModel.setNewForecast(newForecastData);
+    this.weatherDataModel.setNewForecast(rawForecast);
   }
 }
 

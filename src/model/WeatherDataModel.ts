@@ -15,12 +15,17 @@ class WeatherDataModel {
 
   private forecastView: ForecastView;
 
+  // Instantiates in London using the Metric system
+  location: string = 'London';
+  unitSystem: UnitSystem = UnitSystem.Metric;
+
   constructor(forecastView: ForecastView) {
     this.forecastView = forecastView;
   }
 
   private normaliseWeatherData(rawForecast: any): WeatherData {
     const { name, main } = rawForecast;
+    this.location = name;
 
     const weatherData = ObjFilter(
       main,
@@ -47,18 +52,17 @@ class WeatherDataModel {
   }
 
   setNewForecast(rawForecast: any, unitSystem?: UnitSystem): void {
+    if (unitSystem) this.unitSystem = unitSystem;
+
     const normalisedWeatherData: WeatherData =
       this.normaliseWeatherData(rawForecast);
 
     this.forecast = normalisedWeatherData;
-
-    unitSystem
-      ? this.forecastView.updateForecast(this.forecast, unitSystem)
-      : this.forecastView.updateForecast(this.forecast);
+    this.forecastView.updateForecast(this.forecast, this.unitSystem);
 
     // TESTING:
     // setTimeout(() => {
-    //   this.forecastView.updateForecast(this.forecast);
+    //   this.forecastView.updateForecast(this.forecast, this.unitSystem);
     // }, 2000);
   }
 }

@@ -1,6 +1,7 @@
 .card {
   padding: 30px;
-  min-width: 350px;
+  width: 350px;
+  height: 380px;
 }
 
 .card > .content {

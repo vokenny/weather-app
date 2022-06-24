@@ -6,6 +6,7 @@ import { WeatherData } from '../../interfaces';
 import { ObjFilter } from '../../utils/ObjFilter';
 import BaseView from '../BaseView/BaseView';
 import './forecastView.style.css';
+import UnitsToggle from '../../components/unitsToggle/unitsToggle.component';
 
 class ForecastView extends BaseView {
   private WEATHER_CONTENT_KEY = {
@@ -17,10 +18,10 @@ class ForecastView extends BaseView {
   };
 
   private ctrl: WeatherController | null = null;
-  private unitSystem: UnitSystem = UnitSystem.Metric;
   private $search: Search | null = null;
   private $forecastCard: Card;
   private $weatherContent: HTMLParagraphElement[] = [];
+  private $unitsToggle: UnitsToggle | null = null;
 
   constructor() {
     super();
@@ -37,20 +38,24 @@ class ForecastView extends BaseView {
   }
 
   build(): void {
-    if (this.ctrl) this.$search = new Search(this.ctrl);
+    if (this.ctrl) {
+      this.$search = new Search(this.ctrl);
+      this.$unitsToggle = new UnitsToggle(this.ctrl);
+    }
 
     const children = [
-      ...(this.$search ? [this.$search.update()] : []),
+      ...(this.$search ? [this.$search.build()] : []),
       this.loading(),
+      ...(this.$unitsToggle ? [this.$unitsToggle.build()] : []),
     ];
 
     this.$view.replaceChildren(...children);
-
     this.update();
   }
 
   private buildWeatherDataContent(
-    forecast: WeatherData
+    forecast: WeatherData,
+    unitSystem: UnitSystem
   ): HTMLParagraphElement[] {
     const metricData = ObjFilter(
       forecast,
@@ -69,10 +74,11 @@ class ForecastView extends BaseView {
           ];
 
         const unit: string =
-          contentKey === 'humidity' ? '%' : UNITS[this.unitSystem];
+          contentKey === this.WEATHER_CONTENT_KEY.humidity
+            ? '%'
+            : UNITS[unitSystem];
 
         $p.textContent = `${contentKey}: ${value} ${unit}`;
-
         return $p;
       }
     );
@@ -80,18 +86,16 @@ class ForecastView extends BaseView {
     return $weatherInfo;
   }
 
-  updateForecast(forecast: WeatherData, unitSystem?: UnitSystem) {
-    if (unitSystem) this.unitSystem = unitSystem;
-
-    this.$weatherContent = this.buildWeatherDataContent(forecast);
+  updateForecast(forecast: WeatherData, unitSystem: UnitSystem): void {
+    this.$weatherContent = this.buildWeatherDataContent(forecast, unitSystem);
 
     const children = [
-      ...(this.$search ? [this.$search.update()] : []),
+      ...(this.$search ? [this.$search.build()] : []),
       this.$forecastCard.update(forecast.name, this.$weatherContent),
+      ...(this.$unitsToggle ? [this.$unitsToggle.build()] : []),
     ];
 
     this.$view.replaceChildren(...children);
-
     this.update();
   }
 }

@@ -36,7 +36,7 @@ class Search {
     const value = $lookup.value;
 
     const location: string = value.trim().toLowerCase();
-    if (location !== '') this.ctrl.updateForecast(location);
+    if (location !== '') this.ctrl.updateForecast({ q: location });
 
     this.clearInput();
   }
@@ -45,7 +45,7 @@ class Search {
     this.$search.addEventListener('submit', this.lookupHandler.bind(this));
   }
 
-  update(): HTMLFormElement {
+  build(): HTMLFormElement {
     return this.$search;
   }
 }

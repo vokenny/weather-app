@@ -34,6 +34,7 @@ class WeatherController {
      *
      * TODO: Handle *expected* fails like the location cannot be found, propagate it to show an
      * 'Unknown location' message on the UI
+     * 404 - city not found
      */
     const response: Response = await WeatherService.getNewForecast(args);
     const rawForecast: any = await response.json();

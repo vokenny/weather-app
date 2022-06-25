@@ -1,3 +1,4 @@
 {
+  "BASE_URL": "https://api.openweathermap.org/data/2.5/weather",
   "API_KEY": "4864fb69ea5778851be3a8550bf035c1"
 }

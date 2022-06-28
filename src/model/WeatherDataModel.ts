@@ -16,7 +16,7 @@ class WeatherDataModel {
   private forecastView: ForecastView;
 
   // Instantiates in London using the Metric system
-  location: string = 'London';
+  location: string = 'london';
   unitSystem: UnitSystem = UnitSystem.Metric;
 
   constructor(forecastView: ForecastView) {
@@ -25,7 +25,7 @@ class WeatherDataModel {
 
   private normaliseWeatherData(rawForecast: any): WeatherData {
     const { name, main } = rawForecast;
-    this.location = name;
+    this.location = name.trim().toLowerCase();
 
     const weatherData = ObjFilter(
       main,

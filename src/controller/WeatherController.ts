@@ -19,12 +19,15 @@ class WeatherController {
       units: this.weatherDataModel.unitSystem,
     };
 
+    // If searching for the same city, do nothing
+    if (!units && q === wdmQueryParams.q) return;
+
     let args: QueryParams;
 
     if (!q && !units) {
-      args = wdmQueryParams;
+      args = wdmQueryParams; // Use initialised values in the DM
     } else {
-      args = !q ? { ...wdmQueryParams, units } : { ...wdmQueryParams, q };
+      args = !q ? { ...wdmQueryParams, units } : { ...wdmQueryParams, q }; // Use given values
     }
 
     /**

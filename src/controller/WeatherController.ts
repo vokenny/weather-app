@@ -46,12 +46,14 @@ class WeatherController {
 
       case response.status === 404: {
         console.info('[INFO]', 'City not found');
+        this.weatherDataModel.noForecast();
         this.forecastView.notFound();
         break;
       }
 
       default:
         console.error('[ERROR]', `${response.status} ${response.statusText}`);
+        this.weatherDataModel.noForecast();
         this.forecastView.tryAgainLater();
     }
   }

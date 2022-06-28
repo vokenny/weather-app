@@ -65,6 +65,10 @@ class WeatherDataModel {
     //   this.forecastView.updateForecast(this.forecast, this.unitSystem);
     // }, 2000);
   }
+
+  noForecast(): void {
+    this.location = '';
+  }
 }
 
 export default WeatherDataModel;

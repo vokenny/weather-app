@@ -30,23 +30,30 @@ class WeatherController {
       args = !q ? { ...wdmQueryParams, units } : { ...wdmQueryParams, q }; // Use given values
     }
 
-    /**
-     * TODO: Handle *unexpected* failed network requests
-     * 1. Needs to gracefully fail by catching the error and printing out to console
-     * 2. Display a try again later message on the UI
-     *
-     * TODO: Handle *expected* fails like the location cannot be found, propagate it to show an
-     * 'Unknown location' message on the UI
-     * 404 - city not found
-     */
-    const response: Response = await WeatherService.getNewForecast(args);
-    const rawForecast: any = await response.json();
-
     this.forecastView.loading();
+    const response: Response = await WeatherService.getNewForecast(args);
 
-    units
-      ? this.weatherDataModel.setNewForecast(rawForecast, units)
-      : this.weatherDataModel.setNewForecast(rawForecast);
+    switch (true) {
+      case response.status === 200: {
+        const rawForecast: any = await response.json();
+
+        units
+          ? this.weatherDataModel.setNewForecast(rawForecast, units)
+          : this.weatherDataModel.setNewForecast(rawForecast);
+
+        break;
+      }
+
+      case response.status === 404: {
+        console.info('[INFO]', 'City not found');
+        this.forecastView.notFound();
+        break;
+      }
+
+      default:
+        console.error('[ERROR]', `${response.status} ${response.statusText}`);
+        this.forecastView.tryAgainLater();
+    }
   }
 }
 

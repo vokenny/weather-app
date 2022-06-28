@@ -86,14 +86,63 @@ class ForecastView extends BaseView {
     return $weatherInfo;
   }
 
+  private buildViewChildren({
+    title,
+    content,
+    unitsToggleEnabled,
+  }: {
+    title: string;
+    content: HTMLElement[];
+    unitsToggleEnabled: boolean;
+  }): HTMLElement[] {
+    const children = [
+      ...(this.$search ? [this.$search.build()] : []),
+      this.$forecastCard.update(title, content),
+      ...(unitsToggleEnabled && this.$unitsToggle
+        ? [this.$unitsToggle.build()]
+        : []),
+    ];
+
+    return children;
+  }
+
   updateForecast(forecast: WeatherData, unitSystem: UnitSystem): void {
     this.$weatherContent = this.buildWeatherDataContent(forecast, unitSystem);
 
-    const children = [
-      ...(this.$search ? [this.$search.build()] : []),
-      this.$forecastCard.update(forecast.name, this.$weatherContent),
-      ...(this.$unitsToggle ? [this.$unitsToggle.build()] : []),
-    ];
+    const children = this.buildViewChildren({
+      title: forecast.name,
+      content: this.$weatherContent,
+      unitsToggleEnabled: true,
+    });
+
+    this.$view.replaceChildren(...children);
+    this.update();
+  }
+
+  notFound(): void {
+    const $notFoundMsg: HTMLParagraphElement = document.createElement('p');
+    $notFoundMsg.textContent =
+      'We were unable to find your city. Please try again.';
+
+    const children = this.buildViewChildren({
+      title: 'City not found',
+      content: [$notFoundMsg],
+      unitsToggleEnabled: false,
+    });
+
+    this.$view.replaceChildren(...children);
+    this.update();
+  }
+
+  tryAgainLater(): void {
+    const $tryAgainLater: HTMLParagraphElement = document.createElement('p');
+    $tryAgainLater.textContent = 'Something went wrong. Try again later.';
+
+    const children = this.buildViewChildren({
+      title: 'Sorry',
+      content: [$tryAgainLater],
+      unitsToggleEnabled: false,
+    });
 
     this.$view.replaceChildren(...children);
     this.update();
